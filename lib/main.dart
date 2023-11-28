@@ -1,38 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth_jwt/dashboard.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'loginPage.dart';
+import 'package:flutter_auth_jwt/loginPage.dart';
+import 'package:flutter_auth_jwt/pages/ItemPage.dart';
+import 'package:flutter_auth_jwt/pages/home_page.dart';
 
-
-
-void main() async {
-   WidgetsFlutterBinding.ensureInitialized();
-   SharedPreferences prefs = await SharedPreferences.getInstance();
-  runApp(MyApp(token: prefs.getString('token'),));
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
-  final token;
-  const MyApp({
-    @required this.token,
-    Key? key,
-}): super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-
-        primaryColor: Colors.black,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      theme:ThemeData(scaffoldBackgroundColor: Color(0xFFCEDDEE)
+      
       ),
-      home: (token != null && JwtDecoder.isExpired(token) == false )?Dashboard(token: token):SignInPage()
+      routes: {
+        "/": (context) => SignInPage(),
+        "homePage":(context) =>HomePage(),
+        "itemPage":(context) =>ItemPage(),
+        
+      },
     );
   }
 }
-
-
